@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CRM Chatbot</title>
+</head>
+<body>
+  <h2>Ask your CRM assistant</h2>
+  <form onsubmit="sendMessage(); return false;">
+    <input type="text" id="message" placeholder="Type your message...">
+    <button type="submit">Send</button>
+  </form>
+  <div id="response"></div>
+
+  <script>
+    async function sendMessage() {
+      const message = document.getElementById("message").value;
+      const res = await fetch("/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message })
+      });
+      const data = await res.json();
+      document.getElementById("response").innerText = data.response;
+    }
+  </script>
+</body>
+</html>
